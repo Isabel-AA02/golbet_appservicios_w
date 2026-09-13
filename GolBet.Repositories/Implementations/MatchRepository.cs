@@ -25,31 +25,20 @@ public class MatchRepository : GenericRepository<Match>, IMatchRepository
 
 
     public async Task<IEnumerable<Match>> GetAllWithTeamsAsync(MatchStatus? status = null)
-
     {
-
         var query = _dbSet
-
             .Include(m => m.HomeTeam)
-
             .Include(m => m.AwayTeam)
-
             .Where(m => m.IsActive)
-
             .AsNoTracking()
-
             .AsQueryable();
-
 
 
         if (status.HasValue)
 
             query = query.Where(m => m.Status == status.Value);
 
-
-
         return await query.OrderBy(m => m.Date).ToListAsync();
-
     }
 
 
