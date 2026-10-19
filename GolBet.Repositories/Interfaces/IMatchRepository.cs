@@ -1,17 +1,14 @@
-﻿// GolBet.Repositories/Interfaces/IMatchRepository.cs 
+﻿// GolBet.Repositories/Interfaces/IMatchRepository.cs
 using GolBet.Entities;
 using GolBet.Entities.Enums;
 using GolBet.Repositories.Data;
 using GolBet.Repositories.Implementations;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace GolBet.Repositories.Interfaces;
-
 
 public interface IMatchRepository : IGenericRepository<Match>
 {
-    Task<IEnumerable<Match>> GetAllWithTeamsAsync(MatchStatus? status = null);
+    Task<IEnumerable<Match>> GetAllWithTeamsAsync(MatchStatus? status = null, string? search = null); // <-- Añadido search
     Task<Match?> GetByIdWithDetailsAsync(int id);
-} 
-
+}

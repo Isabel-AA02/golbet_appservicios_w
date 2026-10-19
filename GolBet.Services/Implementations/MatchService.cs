@@ -23,10 +23,18 @@ public class MatchService : IMatchService
     }
 
 
-    public async Task<IEnumerable<MatchDto>> GetBoardAsync(MatchStatus? status = null)
+    // GolBet.Services/Implementations/MatchService.cs
+    public async Task<IEnumerable<MatchDto>> GetBoardAsync(MatchStatus? status = null, string? search = null) // <-- Agregado search
     {
-        var matches = await _matchRepository.GetAllWithTeamsAsync(status);
-        return _mapper.Map<IEnumerable<MatchDto>>(matches);
+        var matches = await _matchRepository.GetAllWithTeamsAsync(status, search); // <-- Pasamos search
+
+        var dtos = _mapper.Map<IEnumerable<MatchDto>>(matches);
+        foreach (var dto in dtos)
+        {
+            dto.Date = dto.Date.ToColombiaTime();
+        }
+
+        return dtos;
     }
 
 
